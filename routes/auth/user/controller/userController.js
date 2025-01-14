@@ -1,85 +1,85 @@
-const Address = require("../models/addressModel");
-const { response, handleErrorResponse } = require("../utils/Utilities");
-const createAddress = async (req, res) => {
+const { response,handleErrorResponse } = require("../../../../utils/Utilities");
+const User = require("../model/userModel");
+exports.createUser = async (req, res) => {
   try {
 
-      const address = await Address.create(req.body);
-      response(res, address, "Address created successfully", 200, false);
+      const user = await User.create(req.body);
+      response(res, user, "User created successfully", 200, false);
   } catch (error) {
-      console.error("Error deleting order:", error.message);
+      console.error("Error creating user:", error.message);
       handleErrorResponse(res, error);
   }
 };
-// Get All Addresses
-const getAllAddresses = async (req, res) => {
+// Get All Useres
+exports.getAllUsers = async (req, res) => {
   try {
-    const addresses = await Address.find({isDelete:false}); // Optionally filter for `isDeleted` if required
-    response(res, addresses, "All addresses fetched successfully", 200, false);
+    const useres = await User.find({isDelete:false}); // Optionally filter for `isDeleted` if required
+    response(res, useres, "All useres fetched successfully", 200, false);
   } catch (error) {
-    console.error("Error fetching addresses:", error.message);
+    console.error("Error fetching useres:", error.message);
     handleErrorResponse(res, error);
   }
 };
 
-// Get Address by ID
-const getAddressById = async (req, res) => {
+// Get User by ID
+exports.getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const address = await Address.findById(id);
-    if (!address) {
-      return response(res, null, "Address not found", 404, true);
+    const user = await User.findById(id);
+    if (!user) {
+      return response(res, null, "User not found", 404, true);
     }
-    response(res, address, "Address fetched successfully", 200, false);
+    response(res, user, "User fetched successfully", 200, false);
   } catch (error) {
-    console.error("Error fetching address by ID:", error.message);
+    console.error("Error fetching user by ID:", error.message);
     handleErrorResponse(res, error);
   }
 };
 
-// Get Addresses by User ID
-const getAddressByUserId = async (req, res) => {
+// Get Useres by User ID
+exports.getUserByUserId = async (req, res) => {
   try {
     const { user_id } = req.params;
-    const addresses = await Address.find({ user: user_id });
-    if (!addresses || addresses.length === 0) {
-      return response(res, null, "No addresses found for this user", 404, true);
+    const useres = await User.find({ user: user_id });
+    if (!useres || useres.length === 0) {
+      return response(res, null, "No useres found for this user", 404, true);
     }
-    response(res, addresses, "Addresses fetched successfully", 200, false);
+    response(res, useres, "Useres fetched successfully", 200, false);
   } catch (error) {
-    console.error("Error fetching addresses by user ID:", error.message);
+    console.error("Error fetching useres by user ID:", error.message);
     handleErrorResponse(res, error);
   }
 };
 
-// Update Address
-const updateAddress = async (req, res) => {
+// Update User
+exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedAddress = await Address.findByIdAndUpdate(id, req.body, {
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
     });
-    if (!updatedAddress) {
-      return response(res, null, "Address not found", 404, true);
+    if (!updatedUser) {
+      return response(res, null, "User not found", 404, true);
     }
-    response(res, updatedAddress, "Address updated successfully", 200, false);
+    response(res, updatedUser, "User updated successfully", 200, false);
   } catch (error) {
-    console.error("Error updating address:", error.message);
+    console.error("Error updating user:", error.message);
     handleErrorResponse(res, error);
   }
 };
 
-// Delete Address
-exports.deleteAddress = async (req, res) => {
+// Delete User
+exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedAddress = await Address.findByIdAndDelete(id);
-    if (!deletedAddress) {
-      return response(res, null, "Address not found", 404, true);
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return response(res, null, "User not found", 404, true);
     }
-    response(res, deletedAddress, "Address deleted successfully", 200, false);
+    response(res, deletedUser, "User deleted successfully", 200, false);
   } catch (error) {
-    console.error("Error deleting address:", error.message);
+    console.error("Error deleting user:", error.message);
     handleErrorResponse(res, error);
   }
 };
