@@ -1,0 +1,93 @@
+const User = require("../model/userModel");
+const bcrypt = require("bcryptjs");
+const { response, handleErrorResponse } = require("../../../../utils/Utilities");
+const jwt = require("jsonwebtoken");
+
+
+
+exports.login = async (req, res) => {
+    try {
+        let token;
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            handleErrorResponse(res, "Plz fill all data");
+
+        }
+
+        const userLogin = await User.findOne({ email: email });
+        if (userLogin) {
+            //if it is match then it stores inside the inMatch
+            const inMatch = await bcrypt.compare(password, userLogin.password);
+            const tokenExpiration = 100000 * 60; // 10 minutes in seconds
+            token = jwt.sign({ userId: userLogin._id, userRole: userLogin.role }, "your_secret_key", {
+                expiresIn: tokenExpiration,
+            });
+
+
+
+            await userLogin.save();
+            if (!inMatch) {
+                return res.status(401).send("invalid credentials");
+            } else {
+                const userToken = {
+                    userToken: token,
+                };
+                res.status(200).json(userToken);
+            }
+        } else {
+            return res.status(401).send("invalid credentials");
+        }
+    } catch (error) {
+        console.log(error)
+        response(res, null, "Internal server error", 500, true);
+    }
+};
+exports.getUser = async (req, res) => {
+    try {
+        
+                res.status(200).json(req.userData);
+         
+    } catch (error) {
+        console.log(error)
+        response(res, null, "Internal server error", 500, true);
+    }
+};
+
+
+
+
+exports.register = async (req, res) => {
+    const { name, email, phone, password ,role} = req.body;
+
+    const lowerEmail = email.toLowerCase()
+
+    const user = await User.findOne({ email: lowerEmail, isDeleted: false });
+    if (user) {
+        response(res, null, "User already Exists", 200, true);
+    } else {
+        try {
+            const newUser = new User({
+                name,
+                email: lowerEmail,
+                phone,
+                role,
+                password,
+
+            });
+
+            await newUser.save();
+      
+            response(
+                res,
+                newUser,
+                "User Created",
+                200,
+                false
+            );
+        } catch (error) {
+            console.log(error)
+            response(res, error, "User Registration Failed", 500, true);
+        }
+    }
+};

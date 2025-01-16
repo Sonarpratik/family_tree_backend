@@ -13,7 +13,7 @@ exports.createUser = async (req, res) => {
 // Get All Useres
 exports.getAllUsers = async (req, res) => {
   try {
-    const useres = await User.find({isDelete:false}); // Optionally filter for `isDeleted` if required
+    const useres = await User.find(); // Optionally filter for `isDeleted` if required
     response(res, useres, "All useres fetched successfully", 200, false);
   } catch (error) {
     console.error("Error fetching useres:", error.message);

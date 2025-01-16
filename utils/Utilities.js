@@ -66,6 +66,20 @@ exports.response = (
     data,
   });
 };
+const response = (
+  res,
+  data = null,
+  message = constants.successful,
+  status = statusCode[200],
+  error = false
+) => {
+  return res.status(status).json({
+    message,
+    status,
+    error,
+    data,
+  });
+};
 
 //@desc     Validation Request Interface
 //@author   Parth

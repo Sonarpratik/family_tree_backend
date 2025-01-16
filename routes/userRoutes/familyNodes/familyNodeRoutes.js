@@ -2,7 +2,7 @@ const express = require("express");
 const familyNode = express.Router();
 const {
     createFamilyNode,
-    getAllFamilyNodees,
+    getAllFamilyNodes,
     getFamilyNodeById,
     getFamilyNodeByFamilyNodeId,
     updateFamilyNode,
@@ -13,7 +13,7 @@ const {
 familyNode.get("/:id", getFamilyNodeById);
 familyNode.put("/:id", updateFamilyNode);
 familyNode.get("/:familyNode_id", getFamilyNodeByFamilyNodeId);
-familyNode.get("/", getAllFamilyNodees);
+familyNode.get("/", getAllFamilyNodes);
 familyNode.post("/", createFamilyNode);
 familyNode.delete("/:id", deleteFamilyNode);
 
