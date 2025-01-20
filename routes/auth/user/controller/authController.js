@@ -79,6 +79,8 @@ exports.getUser = async (req, res) => {
 
 
 //pratik
+//pratik
+//sonar
 
 exports.register = async (req, res) => {
     const { name, email, phone, password, role } = req.body;
