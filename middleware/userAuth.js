@@ -21,7 +21,7 @@ exports.userProtect = async (req, res, next) => {
     }
 
     const decoded = jwt.decode(token, 'your_secret_key');
-console.log(decoded);
+    console.log(decoded);
     if (!decoded || !decoded.userId) {
       // return res.status(200).json({ error: "Not authorized, invalid token" });
       return response(res, null, "Not authorized, invalid token", 200, true);

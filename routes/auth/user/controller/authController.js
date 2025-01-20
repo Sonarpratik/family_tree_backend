@@ -28,37 +28,57 @@ exports.login = async (req, res) => {
 
             await userLogin.save();
             if (!inMatch) {
-                return res.status(401).send("invalid credentials");
+                handleErrorResponse(res, "Invalid Credentials",401);
+
+
             } else {
                 const userToken = {
                     userToken: token,
                 };
-                res.status(200).json(userToken);
+                response(res,userToken, "User Verified", 200, false);
+            
+                   
             }
         } else {
-            return res.status(401).send("invalid credentials");
+        handleErrorResponse(res, "Invalid Credentials",401);
+
         }
     } catch (error) {
         console.log(error)
-        response(res, null, "Internal server error", 500, true);
+        handleErrorResponse(res, "Internal server error",500);
+        
     }
 };
 exports.getUser = async (req, res) => {
     try {
-        
-                res.status(200).json(req.userData);
-         
+        const { _id,
+            name,
+            email,
+            phone,
+            role,
+            ...extra
+        } = req.userData
+
+    response(res, { _id,
+        name,
+        email,
+        phone,
+        role
+    }, "User Verified", 200, false);
+
+       
+
     } catch (error) {
         console.log(error)
         response(res, null, "Internal server error", 500, true);
     }
 };
 
-
+    
 
 
 exports.register = async (req, res) => {
-    const { name, email, phone, password ,role} = req.body;
+    const { name, email, phone, password, role } = req.body;
 
     const lowerEmail = email.toLowerCase()
 
@@ -77,7 +97,7 @@ exports.register = async (req, res) => {
             });
 
             await newUser.save();
-      
+
             response(
                 res,
                 newUser,

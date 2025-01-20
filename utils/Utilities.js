@@ -268,14 +268,14 @@ exports.sendEmail = async (to, subject, text) => {
 };
 
 
-exports.handleErrorResponse = (res, error) => {
+exports.handleErrorResponse = (res, error,status) => {
   if (error?.response) {
     // Error from the Facebook API
     return response(
       res,
       error?.response.data.error.message,
       "Error from Meta",
-      error?.response.status,
+      status||error?.response.status,
       true
     );
   } else {

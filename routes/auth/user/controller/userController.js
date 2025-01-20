@@ -31,7 +31,7 @@ exports.getUserById = async (req, res) => {
     }
     response(res, user, "User fetched successfully", 200, false);
   } catch (error) {
-    console.error("Error fetching user by ID:", error.message);
+    console.error("Error fetchingx user by ID:", error.message);
     handleErrorResponse(res, error);
   }
 };
