@@ -80,6 +80,9 @@ exports.getUser = async (req, res) => {
 
 //pratik
 //pratik
+//pratik
+//pratik
+//pratik
 //sonar
 
 exports.register = async (req, res) => {
