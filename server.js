@@ -42,6 +42,7 @@ app.use("/api", userRoutes);
 
 
 // Serve static files from the "public" directory
+// Serve static files from the "public" directory
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
