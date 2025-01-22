@@ -78,6 +78,7 @@ exports.getUser = async (req, res) => {
 //success
 
 //register//partik
+//register//partikauth
 exports.register = async (req, res) => {
     const { name, email, phone, password, role } = req.body;
 
