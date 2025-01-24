@@ -29,6 +29,7 @@ app.use(
       }
     },
     credentials: true,
+    credentials: true,
   })
 );
 
