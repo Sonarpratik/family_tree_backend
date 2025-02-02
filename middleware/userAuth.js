@@ -8,7 +8,8 @@ const User = require("../routes/auth/user/model/userModel");
 
 exports.userProtect = async (req, res, next) => {
   try {
-    const token = req.headers.authorization;
+    let authHeader = req.headers.authorization;
+    const token = authHeader.split(" ")[1];
     if (!token) {
       // return res.status(200).json({ error: "Not authorized, no token provided" });
       return response(
